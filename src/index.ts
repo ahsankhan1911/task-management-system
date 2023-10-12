@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { Request as ExpressRequest, Response as ExpressResponse } from 'express';
 import dotenv from 'dotenv';
 
 import { app } from './app';
@@ -8,7 +8,7 @@ dotenv.config();
 
 const port = process.env.PORT || 8000;
 
-app.get('/', (_req: Request, res: Response) => {
+app.get('/', (_req: ExpressRequest, res: ExpressResponse) => {
   res.send('Welcome to Task Management System');
 });
 
