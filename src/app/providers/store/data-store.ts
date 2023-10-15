@@ -81,19 +81,23 @@ export class DataStore {
    * @param query 
    * @returns Array<Document>
    */
-  public static findAll<T>(Model: Newable<T>, query?: any): Array<T> {
+  public static findAll<T>(Model: Newable<T>, query?: any, page?: number, limit?: number): Array<T> {
     let collection = store[Model.name];
 
+    let data: Array<T> = []; 
+
     if (collection) {
+      data = collection;
+
       if (query) {
-        return collection.filter( (data) => {
+        data = collection.filter( (doc) => {
           let exists: boolean = false;
           const keys = Object.keys(query);
 
           let nonExists: Array<boolean> = [];
 
           for (const key of keys) {
-            exists = data[key] === query[key];
+            exists = doc[key] === query[key];
 
             if (!exists) {
               nonExists.push(exists);
@@ -109,7 +113,10 @@ export class DataStore {
         });
       }
 
-      return collection;
+      const pageNo = page || 1;
+      const pageSize = limit || 10;
+
+      return data.slice((pageNo - 1) * pageNo, pageNo * pageSize);
     }
 
     return [];

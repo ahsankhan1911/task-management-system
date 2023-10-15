@@ -1,7 +1,8 @@
-import { DataStore } from '../providers/store/data-store';
-import { notFoundHandler, successHandler } from '../middlewares/response-handler';
-import { Task, TaskQuery } from '../models';
 import { Request, Response } from 'express';
+
+import { Task, TaskQuery } from 'app/models';
+import { successHandler, notFoundHandler } from 'app/middlewares';
+import { DataStore } from 'app/providers';
 
 /**
  * @name createTask
@@ -81,7 +82,7 @@ export const deleteTask = (req: Request<{ id: string }>, res: Response) => {
  * @method GET
  */
 export const getTasks = (req: Request<any, any, any, TaskQuery>, res: Response) => {
-  const { assignedTo, category } = req.query;
+  const { assignedTo, category, page, limit } = req.query;
 
   let query: TaskQuery | undefined;
 
@@ -93,7 +94,7 @@ export const getTasks = (req: Request<any, any, any, TaskQuery>, res: Response) 
     query = { ...query, category };
   }
 
-  const tasks = DataStore.findAll<Task>(Task, query);
+  const tasks = DataStore.findAll<Task>(Task, query, page, limit);
 
   return res.status(200).json(successHandler(tasks));
 };
