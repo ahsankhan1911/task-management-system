@@ -96,5 +96,7 @@ export const getTasks = (req: Request<any, any, any, TaskQuery>, res: Response) 
 
   const tasks = DataStore.findAll<Task>(Task, query, page, limit);
 
-  return res.status(200).json(successHandler(tasks));
+  const response = { totalItemCount: DataStore.count(Task), items: tasks };
+
+  return res.status(200).json(successHandler(response));
 };
