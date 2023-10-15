@@ -1,18 +1,17 @@
 import { Exclude, Expose, Type } from 'class-transformer';
-import { IsNotEmpty, IsString, IsDate } from 'class-validator';
-import { User } from './user.model';
+import { IsNotEmpty, IsString, IsDate, IsOptional } from 'class-validator';
+
+import { CryptoProvider } from 'app/providers';
 
 export enum TaskStatus {
   Pending = 'pending',
   Completed = 'completed',
 }
 
-@Exclude()
-export class Task {
-  @Expose()
-  @IsString()
-  public readonly id: string = crypto.randomUUID();
+export interface TaskQuery { assignedTo?: string, category?: string; }
 
+@Exclude()
+export class AddTaskBody {
   @Expose()
   @IsString()
   @IsNotEmpty()
@@ -27,18 +26,12 @@ export class Task {
   @IsDate()
   @Type(() => Date)
   @IsNotEmpty()
-  public creationDate: Date;
-
-  @Expose()
-  @IsDate()
-  @Type(() => Date)
-  @IsNotEmpty()
   public dueDate: Date;
 
   @Expose()
   @IsString()
-  @IsNotEmpty()
-  public assignedTo: User;
+  @IsOptional()
+  public assignedTo?: string; // User.id
 
   @Expose()
   @IsString()
@@ -49,4 +42,16 @@ export class Task {
   @IsString()
   @IsNotEmpty()
   public status: TaskStatus;
+}
+
+@Exclude()
+export class Task extends AddTaskBody {
+  @Expose()
+  @IsString()
+  public readonly id: string = CryptoProvider.generateRandomId();
+
+  @Expose()
+  @Type(() => Date)
+  @IsNotEmpty()
+  public readonly creationDate: Date = new Date();
 }
