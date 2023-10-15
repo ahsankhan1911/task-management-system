@@ -22,6 +22,8 @@ rules:
   no-multiple-empty-lines: [error, { max: 1 }]
   arrow-parens: [error, as-needed, { requireForBlockBody: true }]
   "@typescript-eslint/no-unused-vars": [error, { argsIgnorePattern: "^_" }]
+  import/extensions: off
+  import/no-unresolved: off
 
   padding-line-between-statements:
     - error
