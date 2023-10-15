@@ -10,7 +10,7 @@ router.post('/task', authenticateUser,  validateTask, createTask);
 
 router.get('/task/:id', authenticateUser, getTaskById);
 
-router.put('/task/:id', authenticateUser, updateTask);
+router.put('/task/:id', authenticateUser, validateTask, updateTask);
 
 router.delete('/task/:id', authenticateUser, deleteTask);
 
