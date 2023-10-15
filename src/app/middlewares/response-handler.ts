@@ -1,5 +1,5 @@
-import { APIResponse, Exception } from '../providers/api';
-import { MESSAGES } from '../providers/constants';
+import { APIResponse, Exception } from 'app/providers';
+import { MESSAGES } from 'app/providers/constants';
 
 export function successHandler<T>(data: T) {
   return new APIResponse(200, data, 'Success');

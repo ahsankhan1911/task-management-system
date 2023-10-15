@@ -8,7 +8,7 @@ export enum TaskStatus {
   Completed = 'completed',
 }
 
-export interface TaskQuery { assignedTo?: string, category?: string; }
+export interface TaskQuery { assignedTo?: string, category?: string; page?: number; limit?: number; }
 
 @Exclude()
 export class AddTaskBody {
