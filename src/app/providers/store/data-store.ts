@@ -66,7 +66,7 @@ export class DataStore {
     if (collection) {
       const currentIndex = collection.findIndex(obj => obj.id === id);
 
-      if (!currentIndex) {
+      if (currentIndex === -1) {
         return;
       }
 
