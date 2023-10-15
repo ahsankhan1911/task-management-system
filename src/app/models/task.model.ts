@@ -1,5 +1,5 @@
 import { Exclude, Expose, Type } from 'class-transformer';
-import { IsNotEmpty, IsString, IsDate, IsOptional } from 'class-validator';
+import { IsNotEmpty, IsString, IsDate, IsOptional, IsEnum } from 'class-validator';
 
 import { CryptoProvider } from 'app/providers';
 
@@ -39,7 +39,7 @@ export class AddTaskBody {
   public category: string;
 
   @Expose()
-  @IsString()
+  @IsEnum(TaskStatus)
   @IsNotEmpty()
   public status: TaskStatus;
 }
