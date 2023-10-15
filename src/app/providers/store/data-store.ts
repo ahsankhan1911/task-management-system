@@ -158,4 +158,10 @@ export class DataStore {
       }
     }
   }
+
+  public static count(Model: Newable<any>): number {
+    let collection = store[Model.name];
+
+    return collection?.length || 0;
+  }
 }
